@@ -53,11 +53,8 @@ public class StepDefinitions_Login {
 
     @When("user enters valid credentials")
     public void userEntersValidCredentials() {
-        String username = ConfigurationReader.getProperty("username");
-        String password = ConfigurationReader.getProperty("password");
-
-        loginPage.usernameBox.sendKeys(username);
-        loginPage.passwordBox.sendKeys(password);
+        userEntersValidUsername();
+        userEntersValidPassword();
     }
 
     @When("user enters valid username")
@@ -84,17 +81,27 @@ public class StepDefinitions_Login {
 
     @When("user enters invalid credentials")
     public void userEntersInvalidCredentials() {
-        Faker faker = new Faker();
-        String username = faker.name().username();
-        String password = faker.bothify("####????");
+        userEntersInvalidUsername();
+        userEntersInvalidPassword();
+    }
 
-        loginPage.usernameBox.sendKeys(username);
-        loginPage.passwordBox.sendKeys(password);
+    @And("user enters invalid username")
+    public void userEntersInvalidUsername() {
+        loginPage.usernameBox.sendKeys(new Faker().name().username());
+
+    }
+
+    @And("user enters invalid password")
+    public void userEntersInvalidPassword() {
+        loginPage.passwordBox.sendKeys(new Faker().bothify("####????"));
     }
 
     @Then("Wrong username or password message is displayed")
     public void wrongUsernameOrPasswordMessageIsDisplayed() {
-       Assert.assertTrue(loginPage.wrongUsernamePasswordText.isDisplayed());
+        WebElement wrongUsernamePasswordText = loginPage.wrongUsernamePasswordText;
+
+        BrowserUtils.waitForElementToDisplay(wrongUsernamePasswordText);
+        Assert.assertTrue(wrongUsernamePasswordText.isDisplayed());
     }
 
     @Then("Please fill out this field message is displayed on username box")
@@ -127,7 +134,6 @@ public class StepDefinitions_Login {
     public void userCanSeeForgotPasswordLink() {
         Assert.assertTrue(loginPage.forgotPasswordLink.isDisplayed());
     }
-
     @And("user clicks on Forgot password? link")
     public void userClicksOnForgotPasswordLink() {
         loginPage.forgotPasswordLink.click();
@@ -144,9 +150,16 @@ public class StepDefinitions_Login {
         loginPage.usernameBox.clear();
         loginPage.passwordBox.clear();
     }
+
     @Then("user can see valid placeholders on Username and Password fields")
     public void userCanSeeValidPlaceholdersOnUsernameAndPasswordFields() {
         Assert.assertEquals("Username or email", loginPage.usernameBox.getAttribute("placeholder"));
         Assert.assertEquals("Password", loginPage.passwordBox.getAttribute("placeholder"));
+    }
+
+    @Given("browser is restarted")
+    public void browserIsRestarted() {
+        Driver.closeDriver();
+        Driver.getDriver().get(ConfigurationReader.getProperty("env"));
     }
 }
