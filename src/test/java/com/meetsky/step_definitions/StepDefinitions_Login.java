@@ -27,10 +27,7 @@ public class StepDefinitions_Login {
 
     @Given("User is in login page")
     public void user_is_in_login_page() {
-        String expectedUrl = ConfigurationReader.getProperty("env");
-        String actualUrl = Driver.getDriver().getCurrentUrl();
-
-        Assert.assertEquals(expectedUrl, actualUrl);
+        BrowserUtils.verifyTitle("Meetsky - QA");
     }
     
     @When("user clicks login button")
@@ -41,8 +38,6 @@ public class StepDefinitions_Login {
     @And("username is under profile icon")
     public void usernameIsUnderProfileIcon() {
         WebElement username = dashboardPage.usernameText;
-
-        dashboardPage.icon.click();
 
         String expectedUsername = ConfigurationReader.getProperty("username");
         String actualUsername = username.getText();
@@ -124,7 +119,10 @@ public class StepDefinitions_Login {
     public void userClicksOnTheEyeSign() {
         loginPage.eyeSign.click();
     }
-
+    @And("user clicks on profile icon")
+    public void userClicksOnProfileIcon() {
+        dashboardPage.icon.click();
+    }
     @Then("user can see password explicitly")
     public void userCanSeePasswordExplicitly() {
         Assert.assertEquals("text", loginPage.passwordBox.getAttribute("type"));
@@ -159,7 +157,11 @@ public class StepDefinitions_Login {
 
     @Given("browser is restarted")
     public void browserIsRestarted() {
+        String url = Driver.getDriver().getCurrentUrl();
+
         Driver.closeDriver();
-        Driver.getDriver().get(ConfigurationReader.getProperty("env"));
+        Driver.getDriver().get(url);
     }
+
+
 }

@@ -21,6 +21,7 @@
       When user enters valid credentials
       And user clicks login button
       Then user can see dashboard page
+      And user clicks on profile icon
       Then username is under profile icon
 
     @METSK-406

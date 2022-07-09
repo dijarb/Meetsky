@@ -31,9 +31,25 @@ public class BrowserUtils {
         }
         Assert.assertTrue(Driver.getDriver().getTitle().contains(expectedTitle));
     }
-
+//Title methods
     public static void verifyTitle(String expectedTitle){
         Assert.assertEquals(Driver.getDriver().getTitle(),expectedTitle);
+    }
+    public static void verifyTitleContains(String word){
+        Assert.assertTrue(Driver.getDriver().getTitle().contains(word));
+    }
+    public static void verifyTitleStartsWith(String word){
+        Assert.assertTrue(Driver.getDriver().getTitle().startsWith(word));
+    }
+//Url methods
+    public static void verifyUrl(String url){
+        Assert.assertEquals(Driver.getDriver().getCurrentUrl(),url);
+    }
+    public static void verifyUrlContains(String url){
+        Assert.assertTrue(Driver.getDriver().getCurrentUrl().contains(url));
+    }
+    public static void verifyUrlStartsWith(String url){
+        Assert.assertTrue(Driver.getDriver().getCurrentUrl().startsWith(url));
     }
 
     public static void waitForElementToDisplay(WebElement element){
@@ -44,4 +60,5 @@ public class BrowserUtils {
 
         Driver.timeout(10,"s");
     }
+
 }

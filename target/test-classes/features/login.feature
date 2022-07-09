@@ -21,6 +21,7 @@
       When user enters valid credentials
       And user clicks login button
       Then user can see dashboard page
+      And user clicks on profile icon
       Then username is under profile icon
 
     @METSK-406
@@ -35,18 +36,18 @@
       When user enters invalid credentials
       And user presses Enter Key
       Then Wrong username or password message is displayed
-      Given browser is restarted
-      And username and password boxes are empty
-      When user enters valid username
-      And user enters invalid password
-      And user presses Enter Key
-      Then Wrong username or password message is displayed
-      Given browser is restarted
-      And username and password boxes are empty
-      When user enters invalid username
-      And user enters valid password
-      And user presses Enter Key
-      Then Wrong username or password message is displayed
+#      Given browser is restarted
+#      And username and password boxes are empty
+#      When user enters valid username
+#      And user enters invalid password
+#      And user presses Enter Key
+#      Then Wrong username or password message is displayed
+#      Given browser is restarted
+#      And username and password boxes are empty
+#      When user enters invalid username
+#      And user enters valid password
+#      And user presses Enter Key
+#      Then Wrong username or password message is displayed
 
     @METSK-410
     Scenario: Login with missing credentials
